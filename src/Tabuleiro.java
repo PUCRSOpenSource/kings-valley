@@ -3,11 +3,12 @@ import java.util.List;
 
 public class Tabuleiro {
 
+    private static final int size = 5;
     private Peca[][] tabuleiro;
     private List<Peca> pecas;
 
     public Tabuleiro() {
-        tabuleiro = new Peca[5][5];
+        tabuleiro = new Peca[size][size];
         pecas = new ArrayList<>();
         Peca peca;
         peca = new Peca(0, 0, Tipo.SOLDADO, Cor.CLARO);
@@ -47,8 +48,8 @@ public class Tabuleiro {
     public String toString() {
         StringBuilder sb = new StringBuilder();
 
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 5; j++) {
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
                 if (tabuleiro[j][i] != null) {
                     if (tabuleiro[j][i].getCor() == Cor.CLARO) {
                         if (tabuleiro[j][i].getTipo() == Tipo.SOLDADO) {

@@ -33,12 +33,14 @@ public class Recepcao extends UnicastRemoteObject implements JogoInterface {
                 jogador.setCor(Cor.CLARO);
                 p.setJ1(jogador);
                 contadorIds++;
+                jogadores.add(jogador);
                 return jogador.getId();
             }
             if (p.getJ2() == null) {
                 jogador.setCor(Cor.ESCURO);
                 p.setJ2(jogador);
                 contadorIds++;
+                jogadores.add(jogador);
                 return jogador.getId();
             }
 

@@ -7,7 +7,7 @@ public interface JogoInterface extends Remote {
 
     int encerraPartida(int idUsuario) throws RemoteException;
 
-    int teamPartida(int idUsuario) throws RemoteException;
+    int temPartida(int idUsuario) throws RemoteException;
 
     String obtemOponente(int idUsuario) throws RemoteException;
 

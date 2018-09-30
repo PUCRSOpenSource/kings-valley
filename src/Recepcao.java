@@ -117,7 +117,12 @@ public class Recepcao implements JogoInterface {
 
     @Override
     public String obtemTabuleiro(int idUsuario) throws RemoteException {
-        return null;
+        for (Partida p: partidas) {
+            if ((p.getJ1() != null && p.getJ1().getId() == idUsuario) || (p.getJ2() != null && p.getJ2().getId() == idUsuario)) {
+                return p.obtemTabuleiro();
+            }
+        }
+        return "";
     }
 
     @Override

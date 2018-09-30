@@ -55,4 +55,10 @@ public class Partida {
         }
         return Status.ERRO.getValue();
     }
+
+    public String obtemTabuleiro() {
+        if (j1 == null || j2 == null)
+            return "";
+        return tabuleiro.toString();
+    }
 }

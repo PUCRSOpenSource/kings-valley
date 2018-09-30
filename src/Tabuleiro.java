@@ -50,25 +50,25 @@ public class Tabuleiro {
 
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                if (tabuleiro[j][i] != null) {
-                    if (tabuleiro[j][i].getCor() == Cor.CLARO) {
-                        if (tabuleiro[j][i].getTipo() == Tipo.SOLDADO) {
-                            sb.append("c ");
+                if (tabuleiro[i][j] != null) {
+                    if (tabuleiro[i][j].getCor() == Cor.CLARO) {
+                        if (tabuleiro[i][j].getTipo() == Tipo.SOLDADO) {
+                            sb.append("c");
                         } else {
-                            sb.append("C ");
+                            sb.append("C");
                         }
                     } else {
-                        if (tabuleiro[j][i].getTipo() == Tipo.SOLDADO) {
-                            sb.append("e ");
+                        if (tabuleiro[i][j].getTipo() == Tipo.SOLDADO) {
+                            sb.append("e");
                         } else {
-                            sb.append("E ");
+                            sb.append("E");
                         }
                     }
                 } else {
-                    sb.append(". ");
+                    sb.append(".");
                 }
             }
-            sb.append("\n");
+        //    sb.append("\n");
         }
 
 

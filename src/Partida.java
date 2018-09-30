@@ -70,6 +70,20 @@ public class Partida {
             return -4;
         }
         Jogador corrente = j1.getId() == idUsuario ? j1 : j2;
-        return tabuleiro.movePeca(corrente.getCor(), linha, coluna, direcao);
+        int valor_retorno = tabuleiro.movePeca(corrente.getCor(), linha, coluna, direcao);
+        checkSeTerminou();
+        return valor_retorno;
+    }
+
+    private void checkSeTerminou() {
+        Peca rei = tabuleiro.getPecaMeio();
+        if (rei != null && rei.getTipo() == Tipo.REI) {
+            if (rei.getCor() == Cor.CLARO) {
+                vencedor = j1;
+            } else {
+                vencedor = j2;
+            }
+            encerrada = true;
+        }
     }
 }

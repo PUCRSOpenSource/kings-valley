@@ -78,9 +78,87 @@ public class Tabuleiro {
     }
 
     public int movePeca(Cor cor, int linha, int coluna, int direcao) {
-        if(tabuleiro[linha][coluna].getCor() != cor){
+        Direcao dir = Direcao.fromInteger(direcao);
+        if (tabuleiro[linha][coluna] == null || tabuleiro[linha][coluna].getCor() != cor || dir == null) {
             return -3;
         }
-        return 0;
+        if (!direcaoValida(linha, coluna, dir))
+            return 0;
+        Peca peca = tabuleiro[linha][coluna];
+        tabuleiro[linha][coluna] = null;
+        do {
+            int x = 0;
+            int y = 0;
+            switch (dir) {
+                case DIREITA:
+                    x = coluna + 1;
+                    y = linha;
+                case DIAGONAL_DIREITA_INFERIOR:
+                    x = coluna + 1;
+                    y = linha + 1;
+                case BAIXO:
+                    x = coluna;
+                    y = linha + 1;
+                case DIAGONAL_ESQUERDA_INFERIOR:
+                    x = coluna - 1;
+                    y = linha + 1;
+                case ESQUERDA:
+                    x = coluna - 1;
+                    y = linha;
+                case DIAGONAL_ESQUERDA_SUPERIOR:
+                    x = coluna - 1;
+                    y = linha - 1;
+                case CIMA:
+                    x = coluna;
+                    y = linha - 1;
+                case DIAGONAL_DIREITA_SUPERIOR:
+                    x = coluna + 1;
+                    y = linha - 1;
+            }
+            coluna = x;
+            linha = y;
+        } while (direcaoValida(linha, coluna, dir));
+        tabuleiro[linha][coluna] = peca;
+        peca.setX(coluna);
+        peca.setY(linha);
+        return 1;
+    }
+
+    private boolean direcaoValida(int linha, int coluna, Direcao direcao) {
+        int x = 0;
+        int y = 0;
+        switch (direcao) {
+            case DIREITA:
+                x = coluna + 1;
+                y = linha;
+            case DIAGONAL_DIREITA_INFERIOR:
+                x = coluna + 1;
+                y = linha + 1;
+            case BAIXO:
+                x = coluna;
+                y = linha + 1;
+            case DIAGONAL_ESQUERDA_INFERIOR:
+                x = coluna - 1;
+                y = linha + 1;
+            case ESQUERDA:
+                x = coluna - 1;
+                y = linha;
+            case DIAGONAL_ESQUERDA_SUPERIOR:
+                x = coluna - 1;
+                y = linha - 1;
+            case CIMA:
+                x = coluna;
+                y = linha - 1;
+            case DIAGONAL_DIREITA_SUPERIOR:
+                x = coluna + 1;
+                y = linha - 1;
+        }
+        if (x < 0 || y < 0 || x >= size || y >= size || tabuleiro[y][x] != null)
+            return false;
+        return true;
+    }
+
+    public Peca getPecaMeio() {
+        return tabuleiro[2][2];
     }
 }

@@ -1,4 +1,7 @@
+import java.awt.*;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class TUI {
@@ -16,7 +19,77 @@ public class TUI {
     public void comecaJogo() throws RemoteException, InterruptedException {
         registraUsuario();
         achaJogo();
-        //    jogar();
+        jogar();
+    }
+
+    private void jogar() throws RemoteException, InterruptedException {
+        while (true) {
+            int status = esperaMeuTurno();
+            switch (status) {
+                case 3:
+                    System.out.println("Voce PERDEU,loser");
+                    return;
+                case 2:
+                    System.out.println("Voce venceu, monstro");
+                case 4:
+                    System.out.println("Empatou");
+                    return;
+                case 5:
+                    System.out.println("Voce venceu por WO, sortudo");
+                    return;
+                case 6:
+                    System.out.println("Voce perdeu por WO, idiota");
+                    return;
+            }
+            facaJogada();
+        }
+    }
+
+    private void facaJogada() throws RemoteException {
+        System.out.println("Faça a sua jogada:");
+        System.out.println("Digite a linha, seguida da coluna e depois da direçao:");
+        System.out.println("DIREÇAO: 0 - direita, 1 - diagonal direita-inferior, 2 - para baixo, 3 - diagonal esquerda-inferior");
+        System.out.println("         4 - esquerda, 5 - diagonal esquerda-superior, 6 - para cima, 7 - diagonal direita-superior");
+        printaTabuleiro();
+        String input = scanner.nextLine();
+        int linha = Integer.parseInt(String.valueOf(input.charAt(0)));
+        int coluna = Integer.parseInt(String.valueOf(input.charAt(1)));
+        int direcao = Integer.parseInt(String.valueOf(input.charAt(2)));
+        jogo.movePeca(idUsuario, linha, coluna, direcao);
+    }
+
+    private void printaTabuleiro() throws RemoteException {
+        String tabuleiro = jogo.obtemTabuleiro(idUsuario);
+        List<String> linhas = new ArrayList<>();
+        int i = 0;
+        while (i < tabuleiro.length()) {
+            linhas.add(tabuleiro.substring(i, Math.min(i + 5, tabuleiro.length())));
+            i += 5;
+        }
+        System.out.println("  01234");
+        i = 0;
+        for (String linha : linhas) {
+            System.out.print(i + " ");
+            System.out.println(linha);
+            i++;
+        }
+    }
+
+    private int esperaMeuTurno() throws InterruptedException, RemoteException {
+        int status = 0;
+        while (status != 1) {
+            switch (status) {
+                case 2:
+                case 3:
+                case 4:
+                case 5:
+                case 6:
+                    return status;
+            }
+            status = jogo.ehMinhaVez(idUsuario);
+            Thread.sleep(1000);
+        }
+        return status;
     }
 
     private void achaJogo() throws RemoteException, InterruptedException {
@@ -55,7 +128,7 @@ public class TUI {
         System.out.println("Digite seu nome: ");
         String nome = scanner.nextLine();
         idUsuario = jogo.registraJogador(nome);
-        if(idUsuario == -1){
+        if (idUsuario == -1) {
             System.out.println("Nome ja em uso.");
             System.exit(1);
         }

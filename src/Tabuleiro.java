@@ -93,27 +93,35 @@ public class Tabuleiro {
                 case DIREITA:
                     x = coluna + 1;
                     y = linha;
+                    break;
                 case DIAGONAL_DIREITA_INFERIOR:
                     x = coluna + 1;
                     y = linha + 1;
+                    break;
                 case BAIXO:
                     x = coluna;
                     y = linha + 1;
+                    break;
                 case DIAGONAL_ESQUERDA_INFERIOR:
                     x = coluna - 1;
                     y = linha + 1;
+                    break;
                 case ESQUERDA:
                     x = coluna - 1;
                     y = linha;
+                    break;
                 case DIAGONAL_ESQUERDA_SUPERIOR:
                     x = coluna - 1;
                     y = linha - 1;
+                    break;
                 case CIMA:
                     x = coluna;
                     y = linha - 1;
+                    break;
                 case DIAGONAL_DIREITA_SUPERIOR:
                     x = coluna + 1;
                     y = linha - 1;
+                    break;
             }
             coluna = x;
             linha = y;
@@ -131,27 +139,35 @@ public class Tabuleiro {
             case DIREITA:
                 x = coluna + 1;
                 y = linha;
+                break;
             case DIAGONAL_DIREITA_INFERIOR:
                 x = coluna + 1;
                 y = linha + 1;
+                break;
             case BAIXO:
                 x = coluna;
                 y = linha + 1;
+                break;
             case DIAGONAL_ESQUERDA_INFERIOR:
                 x = coluna - 1;
                 y = linha + 1;
+                break;
             case ESQUERDA:
                 x = coluna - 1;
                 y = linha;
+                break;
             case DIAGONAL_ESQUERDA_SUPERIOR:
                 x = coluna - 1;
                 y = linha - 1;
+                break;
             case CIMA:
                 x = coluna;
                 y = linha - 1;
+                break;
             case DIAGONAL_DIREITA_SUPERIOR:
                 x = coluna + 1;
                 y = linha - 1;
+                break;
         }
         if (x < 0 || y < 0 || x >= size || y >= size || tabuleiro[y][x] != null)
             return false;

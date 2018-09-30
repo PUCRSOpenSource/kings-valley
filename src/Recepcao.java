@@ -1,17 +1,17 @@
 import com.sun.xml.internal.bind.v2.TODO;
 
 import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Recepcao implements JogoInterface {
+public class Recepcao extends UnicastRemoteObject implements JogoInterface {
 
     private List<Partida> partidas;
     private List<Jogador> jogadores;
     private int contadorIds;
 
-    public Recepcao() {
-
+    protected Recepcao() throws RemoteException {
         jogadores = new LinkedList<>();
         partidas = new LinkedList<>();
         for (int i = 0; i < 500; i++) {
@@ -119,7 +119,7 @@ public class Recepcao implements JogoInterface {
 
     @Override
     public String obtemTabuleiro(int idUsuario) throws RemoteException {
-        for (Partida p: partidas) {
+        for (Partida p : partidas) {
             if ((p.getJ1() != null && p.getJ1().getId() == idUsuario) || (p.getJ2() != null && p.getJ2().getId() == idUsuario)) {
                 return p.obtemTabuleiro();
             }
@@ -129,7 +129,7 @@ public class Recepcao implements JogoInterface {
 
     @Override
     public int movePeca(int idUsuario, int linha, int coluna, int direcao) throws RemoteException {
-        for (Partida p: partidas) {
+        for (Partida p : partidas) {
             if ((p.getJ1() != null && p.getJ1().getId() == idUsuario) || (p.getJ2() != null && p.getJ2().getId() == idUsuario)) {
                 return p.movePeca(idUsuario, linha, coluna, direcao);
 

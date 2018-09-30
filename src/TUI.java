@@ -30,7 +30,8 @@ public class TUI {
                     System.out.println("Voce PERDEU,loser");
                     return;
                 case 2:
-                    System.out.println("Voce venceu, monstro");
+                    System.out.println("Voce venceu! \\o>");
+                    return;
                 case 4:
                     System.out.println("Empatou");
                     return;
@@ -38,7 +39,7 @@ public class TUI {
                     System.out.println("Voce venceu por WO, sortudo");
                     return;
                 case 6:
-                    System.out.println("Voce perdeu por WO, idiota");
+                    System.out.println("Voce perdeu por WO");
                     return;
             }
             facaJogada();
@@ -55,7 +56,11 @@ public class TUI {
         int linha = Integer.parseInt(String.valueOf(input.charAt(0)));
         int coluna = Integer.parseInt(String.valueOf(input.charAt(1)));
         int direcao = Integer.parseInt(String.valueOf(input.charAt(2)));
-        jogo.movePeca(idUsuario, linha, coluna, direcao);
+        int resposta = jogo.movePeca(idUsuario, linha, coluna, direcao);
+        if (resposta == 0) {
+            System.out.println("Jogada invalida :( ");
+        }
+        printaTabuleiro();
     }
 
     private void printaTabuleiro() throws RemoteException {

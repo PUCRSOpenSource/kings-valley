@@ -72,6 +72,8 @@ public class Partida {
         Jogador corrente = j1.getId() == idUsuario ? j1 : j2;
         int valor_retorno = tabuleiro.movePeca(corrente.getCor(), linha, coluna, direcao);
         checkSeTerminou();
+        if (valor_retorno == 1)
+            vezJ1 = !vezJ1;
         return valor_retorno;
     }
 

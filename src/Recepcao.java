@@ -17,7 +17,7 @@ public class Recepcao implements JogoInterface {
         for (int i = 0; i < 500; i++) {
             partidas.add(new Partida());
         }
-        contadorIds = 0;
+        contadorIds = 45;
     }
 
     @Override
@@ -30,11 +30,13 @@ public class Recepcao implements JogoInterface {
 
         for (Partida p : partidas) {
             if (p.getJ1() == null) {
+                jogador.setCor(Cor.CLARO);
                 p.setJ1(jogador);
                 contadorIds++;
                 return jogador.getId();
             }
             if (p.getJ2() == null) {
+                jogador.setCor(Cor.ESCURO);
                 p.setJ2(jogador);
                 contadorIds++;
                 return jogador.getId();
@@ -127,7 +129,14 @@ public class Recepcao implements JogoInterface {
 
     @Override
     public int movePeca(int idUsuario, int linha, int coluna, int direcao) throws RemoteException {
-        return 0;
+        for (Partida p: partidas) {
+            if ((p.getJ1() != null && p.getJ1().getId() == idUsuario) || (p.getJ2() != null && p.getJ2().getId() == idUsuario)) {
+                return p.movePeca(idUsuario, linha, coluna, direcao);
+
+            }
+        }
+        return -1;
+
     }
 
     private void removeJogador(int idUsuario) {
@@ -138,4 +147,3 @@ public class Recepcao implements JogoInterface {
     }
 
 }
-

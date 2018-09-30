@@ -61,4 +61,15 @@ public class Partida {
             return "";
         return tabuleiro.toString();
     }
+
+    public int movePeca(int idUsuario, int linha, int coluna, int direcao) {
+        //TODO LIDAR COM O TEMPO (AGAIN)
+        if (j1 == null || j2 == null)
+            return -2;
+        if ((j1.getId() == idUsuario && !vezJ1) || (j2.getId() == idUsuario && vezJ1)) {
+            return -4;
+        }
+        Jogador corrente = j1.getId() == idUsuario ? j1 : j2;
+        return tabuleiro.movePeca(corrente.getCor(), linha, coluna, direcao);
+    }
 }

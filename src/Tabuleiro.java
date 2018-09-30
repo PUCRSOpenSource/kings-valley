@@ -68,15 +68,19 @@ public class Tabuleiro {
                     sb.append(".");
                 }
             }
-        //    sb.append("\n");
         }
-
-
         return sb.toString();
     }
 
     public static void main(String args[]) {
         Tabuleiro t = new Tabuleiro();
         System.out.println(t.toString());
+    }
+
+    public int movePeca(Cor cor, int linha, int coluna, int direcao) {
+        if(tabuleiro[linha][coluna].getCor() != cor){
+            return -3;
+        }
+        return 0;
     }
 }

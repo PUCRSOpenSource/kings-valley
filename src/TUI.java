@@ -57,7 +57,7 @@ public class TUI {
         int coluna = Integer.parseInt(String.valueOf(input.charAt(1)));
         int direcao = Integer.parseInt(String.valueOf(input.charAt(2)));
         int resposta = jogo.movePeca(idUsuario, linha, coluna, direcao);
-        if (resposta == 0) {
+        if (resposta == 0 || resposta == -3) {
             System.out.println("Jogada invalida :( ");
         }
         printaTabuleiro();

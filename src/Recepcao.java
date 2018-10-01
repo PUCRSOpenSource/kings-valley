@@ -1,5 +1,6 @@
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -50,19 +51,23 @@ public class Recepcao extends UnicastRemoteObject implements JogoInterface {
 
     @Override
     public synchronized int encerraPartida(int idUsuario) throws RemoteException {
-        for (Partida p : partidas) {
+        Iterator<Partida> partidaIterador = partidas.iterator();
+        while (partidaIterador.hasNext()) {
+            Partida p = partidaIterador.next();
             if (p.getJ1() != null && p.getJ1().getId() == idUsuario) {
                 if (p.getJ2() != null)
                     removeJogador(p.getJ2().getId());
                 removeJogador(idUsuario);
-                partidas.remove(p);
+                partidaIterador.remove();
+                partidas.add(new Partida());
                 return 0;
             }
             if (p.getJ2() != null && p.getJ2().getId() == idUsuario) {
                 if (p.getJ1() != null)
                     removeJogador(p.getJ1().getId());
                 removeJogador(idUsuario);
-                partidas.remove(p);
+                partidaIterador.remove();
+                partidas.add(new Partida());
                 return 0;
             }
         }
@@ -75,7 +80,7 @@ public class Recepcao extends UnicastRemoteObject implements JogoInterface {
             if (p.getJ1() != null && p.getJ1().getId() == idUsuario) {
                 if (p.getJ2() != null)
                     return 1;
-                if (p.passouUmMinuto()){
+                if (p.passouUmMinuto()) {
                     return -2;
                 }
                 return 0;
@@ -83,7 +88,7 @@ public class Recepcao extends UnicastRemoteObject implements JogoInterface {
             if (p.getJ2() != null && p.getJ2().getId() == idUsuario) {
                 if (p.getJ1() != null)
                     return 2;
-                if (p.passouUmMinuto()){
+                if (p.passouUmMinuto()) {
                     return -2;
                 }
                 return 0;
@@ -113,7 +118,7 @@ public class Recepcao extends UnicastRemoteObject implements JogoInterface {
     }
 
     @Override
-    public int ehMinhaVez(int idUsuario) throws RemoteException {
+    public synchronized int ehMinhaVez(int idUsuario) throws RemoteException {
         for (Partida p : partidas) {
             if ((p.getJ1() != null && p.getJ1().getId() == idUsuario) || (p.getJ2() != null && p.getJ2().getId() == idUsuario)) {
                 return p.getStatus(idUsuario);
@@ -145,10 +150,14 @@ public class Recepcao extends UnicastRemoteObject implements JogoInterface {
     }
 
     private void removeJogador(int idUsuario) {
-        for (Jogador j : jogadores) {
-            if (j.getId() == idUsuario)
-                jogadores.remove(j);
+
+        Iterator<Jogador> jogadorIterator = jogadores.iterator();
+        while (jogadorIterator.hasNext()) {
+            Jogador j = jogadorIterator.next();
+            if (j.getId() == idUsuario) {
+                jogadorIterator.remove();
+                return;
+            }
         }
     }
-
 }

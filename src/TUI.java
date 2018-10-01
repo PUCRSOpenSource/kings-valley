@@ -27,18 +27,21 @@ public class TUI {
             switch (status) {
                 case 3:
                     System.out.println("Voce PERDEU,loser");
+                    jogo.encerraPartida(idUsuario);
                     return;
                 case 2:
                     System.out.println("Voce venceu! \\o>");
                     return;
                 case 4:
                     System.out.println("Empatou");
+                    jogo.encerraPartida(idUsuario);
                     return;
                 case 5:
                     System.out.println("Voce venceu por WO, sortudo");
                     return;
                 case 6:
                     System.out.println("Voce perdeu por WO");
+                    jogo.encerraPartida(idUsuario);
                     return;
             }
             facaJogada();

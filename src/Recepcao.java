@@ -21,7 +21,7 @@ public class Recepcao extends UnicastRemoteObject implements JogoInterface {
     }
 
     @Override
-    public int registraJogador(String nomeJogador) throws RemoteException {
+    public synchronized int registraJogador(String nomeJogador) throws RemoteException {
         for (Jogador j : jogadores) {
             if (j.getNome().equals(nomeJogador))
                 return -1;
@@ -49,7 +49,7 @@ public class Recepcao extends UnicastRemoteObject implements JogoInterface {
     }
 
     @Override
-    public int encerraPartida(int idUsuario) throws RemoteException {
+    public synchronized int encerraPartida(int idUsuario) throws RemoteException {
         for (Partida p : partidas) {
             if (p.getJ1() != null && p.getJ1().getId() == idUsuario) {
                 if (p.getJ2() != null)
@@ -130,7 +130,7 @@ public class Recepcao extends UnicastRemoteObject implements JogoInterface {
     }
 
     @Override
-    public int movePeca(int idUsuario, int linha, int coluna, int direcao) throws RemoteException {
+    public synchronized int movePeca(int idUsuario, int linha, int coluna, int direcao) throws RemoteException {
         for (Partida p : partidas) {
             if ((p.getJ1() != null && p.getJ1().getId() == idUsuario) || (p.getJ2() != null && p.getJ2().getId() == idUsuario)) {
                 return p.movePeca(idUsuario, linha, coluna, direcao);

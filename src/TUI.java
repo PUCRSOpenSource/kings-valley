@@ -1,4 +1,3 @@
-import java.awt.*;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
@@ -104,8 +103,9 @@ public class TUI {
             status = jogo.temPartida(idUsuario);
             switch (status) {
                 case -2:
-                    //TODO LIDAR COM O TEMPO (AGAIN)
-                    break;
+                    System.out.println("\nTempo de espera esgotado!");
+                    jogo.encerraPartida(idUsuario);
+                    System.exit(1);
                 case -1:
                     System.out.println("\nErro se comunicando com o servidor, tentando novamente");
                     break;

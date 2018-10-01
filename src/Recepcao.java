@@ -1,5 +1,3 @@
-import com.sun.xml.internal.bind.v2.TODO;
-
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.LinkedList;
@@ -32,6 +30,7 @@ public class Recepcao extends UnicastRemoteObject implements JogoInterface {
             if (p.getJ1() == null) {
                 jogador.setCor(Cor.CLARO);
                 p.setJ1(jogador);
+                p.setTimer(System.currentTimeMillis());
                 contadorIds++;
                 jogadores.add(jogador);
                 return jogador.getId();
@@ -39,6 +38,7 @@ public class Recepcao extends UnicastRemoteObject implements JogoInterface {
             if (p.getJ2() == null) {
                 jogador.setCor(Cor.ESCURO);
                 p.setJ2(jogador);
+                p.setTimer(System.currentTimeMillis());
                 contadorIds++;
                 jogadores.add(jogador);
                 return jogador.getId();
@@ -71,21 +71,24 @@ public class Recepcao extends UnicastRemoteObject implements JogoInterface {
 
     @Override
     public int temPartida(int idUsuario) throws RemoteException {
-        //TODO: LIDAR COM O TEMPO
         for (Partida p : partidas) {
             if (p.getJ1() != null && p.getJ1().getId() == idUsuario) {
                 if (p.getJ2() != null)
                     return 1;
+                if (p.passouUmMinuto()){
+                    return -2;
+                }
                 return 0;
             }
             if (p.getJ2() != null && p.getJ2().getId() == idUsuario) {
                 if (p.getJ1() != null)
                     return 2;
+                if (p.passouUmMinuto()){
+                    return -2;
+                }
                 return 0;
             }
-
         }
-
         return -1;
     }
 

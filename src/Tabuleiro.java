@@ -72,11 +72,6 @@ public class Tabuleiro {
         return sb.toString();
     }
 
-    public static void main(String args[]) {
-        Tabuleiro t = new Tabuleiro();
-        System.out.println(t.toString());
-    }
-
     public int movePeca(Cor cor, int linha, int coluna, int direcao) {
         Direcao dir = Direcao.fromInteger(direcao);
         if (tabuleiro[linha][coluna] == null || tabuleiro[linha][coluna].getCor() != cor || dir == null) {

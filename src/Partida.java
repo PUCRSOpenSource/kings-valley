@@ -5,11 +5,14 @@ public class Partida {
     private Jogador j2;
     private boolean vezJ1;
     private boolean encerrada;
+    private boolean wo;
     private Jogador vencedor;
+    private long timer;
 
     public Partida() {
         tabuleiro = new Tabuleiro();
         vezJ1 = true;
+        wo = false;
         encerrada = false;
     }
 
@@ -29,16 +32,41 @@ public class Partida {
         this.j2 = j2;
     }
 
+    public long getTimer() {
+        return timer;
+    }
+
+    public void setTimer(long timer) {
+        this.timer = timer;
+    }
+
+    public boolean passouUmMinuto() {
+        if (System.currentTimeMillis() > (timer + 60 * 1000)) {
+            return true;
+        }
+        return false;
+    }
+
     public int getStatus(int idUsuario) {
-        //TODO LIDAR COM O TEMPO (WO)
         if (j1 == null || j2 == null)
             return Status.FALTA_JOGADOR.getValue();
+        if (passouUmMinuto()) {
+            encerrada = true;
+            vencedor = vezJ1 ? j2 : j1;
+            wo = true;
+        }
         if (encerrada) {
             if (vencedor == null) {
                 return Status.EMPATE.getValue();
             }
             if (vencedor.getId() == idUsuario) {
+                if (wo) {
+                    return Status.VENCEDOR_WO.getValue();
+                }
                 return Status.VENCEDOR.getValue();
+            }
+            if (wo) {
+                return Status.PERDEDOR_WO.getValue();
             }
             return Status.PERDEDOR.getValue();
         }
@@ -63,17 +91,20 @@ public class Partida {
     }
 
     public int movePeca(int idUsuario, int linha, int coluna, int direcao) {
-        //TODO LIDAR COM O TEMPO (AGAIN)
         if (j1 == null || j2 == null)
             return -2;
         if ((j1.getId() == idUsuario && !vezJ1) || (j2.getId() == idUsuario && vezJ1)) {
             return -4;
         }
+        if (passouUmMinuto())
+            return 2;
         Jogador corrente = j1.getId() == idUsuario ? j1 : j2;
         int valor_retorno = tabuleiro.movePeca(corrente.getCor(), linha, coluna, direcao);
         checkSeTerminou();
-        if (valor_retorno == 1)
+        if (valor_retorno == 1) {
             vezJ1 = !vezJ1;
+            timer = System.currentTimeMillis();
+        }
         return valor_retorno;
     }
 
